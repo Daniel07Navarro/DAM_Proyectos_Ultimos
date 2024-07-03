@@ -12,9 +12,9 @@ public class NotaEntity {
     public String contenido;
     public boolean favorita;
 
-    public int color;
+    public String color;
 
-    public NotaEntity(String titulo, String contenido, boolean favorita, int color) {
+    public NotaEntity(Integer id, String titulo, String contenido, boolean favorita, String color) {
         this.id = id;
         this.titulo = titulo;
         this.contenido = contenido;
@@ -22,11 +22,18 @@ public class NotaEntity {
         this.color = color;
     }
 
-    public int getId() {
+    public NotaEntity(String titulo, String contenido, boolean favorita, String color) {
+        this.titulo = titulo;
+        this.contenido = contenido;
+        this.favorita = favorita;
+        this.color = color;
+    }
+
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -54,16 +61,11 @@ public class NotaEntity {
         this.favorita = favorita;
     }
 
-    public int getColor() {
+    public String getColor() {
         return color;
     }
 
-    public void setColor(int color) {
+    public void setColor(String color) {
         this.color = color;
     }
-
-
-
-
-
 }

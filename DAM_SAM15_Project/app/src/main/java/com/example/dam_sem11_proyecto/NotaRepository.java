@@ -4,6 +4,7 @@ import android.app.Application;
 import android.os.AsyncTask;
 
 import androidx.lifecycle.LiveData;
+import androidx.room.RoomDatabase;
 
 import com.example.dam_sem11_proyecto.db.NotaRoomDatabase;
 import com.example.dam_sem11_proyecto.db.dao.NotaDao;
@@ -11,13 +12,13 @@ import com.example.dam_sem11_proyecto.db.entity.NotaEntity;
 
 import java.util.List;
 
-public class notaRepository {
+public class NotaRepository {
     private NotaDao notaDao;
     private LiveData<List<NotaEntity>> allNotas;
     private LiveData<List<NotaEntity>> allNotasFavoritas;
 
     // Constructor
-    public notaRepository(Application application) {
+    public NotaRepository(Application application) {
         NotaRoomDatabase db = NotaRoomDatabase.getDatabase(application);
         notaDao = db.notaDao();
         allNotas = notaDao.getAll();

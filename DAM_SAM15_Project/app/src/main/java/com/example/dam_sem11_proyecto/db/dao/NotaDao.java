@@ -1,5 +1,6 @@
 package com.example.dam_sem11_proyecto.db.dao;
 
+import androidx.room.Dao;
 import androidx.room.Insert;
 import androidx.room.Query;
 import androidx.room.Update;
@@ -9,6 +10,7 @@ import com.example.dam_sem11_proyecto.db.entity.NotaEntity;
 
 import java.util.List;
 
+@Dao
 public interface NotaDao {
 
     @Insert
@@ -20,14 +22,15 @@ public interface NotaDao {
     @Query("DELETE FROM notas")
     void deleteAll();
 
-    @Query("DELETE FROM notas WHERE id = : idNota")
-    void deleteById(int idNota);
+    //@Query("DELETE FROM notas WHERE id = : idNota")
+    //void deleteById(int idNota);
 
     @Query("SELECT * FROM notas ORDER BY titulo ASC")
     LiveData<List<NotaEntity>> getAll();
 
     @Query("SELECT * FROM notas WHERE favorita LIKE 'true'")
     LiveData<List<NotaEntity>> getAllFavoritas();
+
 
 
     /*

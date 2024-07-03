@@ -5,6 +5,7 @@ plugins {
 android {
     namespace 'com.example.dam_sem11_proyecto'
     compileSdk 34
+    
 
     defaultConfig {
         applicationId "com.example.dam_sem11_proyecto"

@@ -27,6 +27,12 @@ public class MyNotaRecyclerViewAdapter extends RecyclerView.Adapter<MyNotaRecycl
         this.ctx = ctx;
     }
 
+    // Creamos un método, para actualizar el adapter
+    public void setNuevasNotas(List<NotaEntity> nuevasNotas){
+        this.mValues = nuevasNotas;
+        notifyDataSetChanged();
+    }
+
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())

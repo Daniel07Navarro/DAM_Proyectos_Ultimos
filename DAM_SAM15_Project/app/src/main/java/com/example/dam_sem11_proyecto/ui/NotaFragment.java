@@ -3,19 +3,26 @@ package com.example.dam_sem11_proyecto.ui;
 import android.content.Context;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
 import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.dam_sem11_proyecto.NuevaNotaDialogViewModel;
 import com.example.dam_sem11_proyecto.R;
 import com.example.dam_sem11_proyecto.db.entity.NotaEntity;
 
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,6 +41,7 @@ public class NotaFragment extends Fragment {
 
     private MyNotaRecyclerViewAdapter adapterNotas;
 
+    private NuevaNotaDialogViewModel notaViewModel;
 
 
     /**
@@ -80,18 +88,37 @@ public class NotaFragment extends Fragment {
                 recyclerView.setLayoutManager(new StaggeredGridLayoutManager( numeroColumnas, StaggeredGridLayoutManager.VERTICAL));
             }
             notaList = new ArrayList<>();
+            /*
             notaList.add(new NotaEntity("UC4","Estudiar para la evaluación de la UC4 - Caso: Notas y Listas", true, android.R.color.holo_blue_light));
             notaList.add(new NotaEntity("Recordar", "He aparcado el coche en la calle República Argentina, no olvidarme en el parque",false, android.R.color.holo_green_light));
             notaList.add(new NotaEntity("cumpleaños (fiesta)","Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum", true, android.R.color.holo_orange_light));
             notaList.add(new NotaEntity("Deporte DAM","En la semana 16 al terminar la clase, todos nos vamos a jugar futsal", true,android.R.color.holo_blue_light));
             notaList.add(new NotaEntity("Trab. Acad.", "Para el trabajo académico cada estudiante debe elaborar un video, desarrollando el caso Notas y Listas. De inicio a Fin.",false, android.R.color.holo_green_light));
             notaList.add(new NotaEntity("cumpleaños Rakauskas","Para el cumpleaños del delegado, cada estudiante debe traer un bocadito y la profesora traerá la torta para el salón. La temática de la fiesta será: GitHub for Ever", true, android.R.color.holo_orange_light));
-            notaList.add(new NotaEntity("Lista de la compra","comprar pan tostado y fruta", true, android.R.color.holo_blue_light));
+            notaList.add(new NotaEntity("Lista de la compra","comprar pan tostado y fruta", true, android.R.color.holo_blue_light));*/
             adapterNotas = new MyNotaRecyclerViewAdapter(notaList, getActivity());
             recyclerView.setAdapter(adapterNotas);
+            // Inicialmente, va a salir error, entonces hacemos clic derecho y Crear Método.
+            lanzarViewModel();
         }
         return view;
     }
 
+    private void lanzarViewModel() {
+        notaViewModel = ViewModelProviders.of(getActivity()).get(NuevaNotaDialogViewModel.class);
+        notaViewModel.getAllNotas().observe(getActivity(), new Observer<List<NotaEntity>>() {
+            @Override
+            public void onChanged(List<NotaEntity> notaEntities) {
+                // Ahora vamos a actualizar el adapter
+                adapterNotas.setNuevasNotas(notaEntities);
+            }
+        });
+    }
 
+
+    @Override
+    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
+        // para options_menu_nota_fragment, se debe general el archivo xml
+        inflater.inflate(R.menu.options_menu_nota_fragment, menu);
+    }
 }
